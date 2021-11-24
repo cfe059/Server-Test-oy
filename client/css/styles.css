@@ -1,0 +1,65 @@
+
+.input {
+    font-size: 24px;
+}
+
+li {
+    list-style: none;
+}
+
+.input li {
+    display: flex;
+}
+
+.input li input {
+    height: 20px;
+}
+
+.input .nickname {
+    margin-top: auto;
+    margin-bottom: auto;
+    width: 180px;
+}
+
+.input .messages {
+    width: 270px;
+    margin-top: 0;
+}
+
+.input .submit {
+    margin-left: 10%;
+    margin-top: 10px;
+}
+
+.card {
+    background-color: white;
+    border-color: black;
+    border-width: 1px;
+    padding: 10px;
+    width: 30%;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 10px;
+    box-shadow: 2px 2px 4px -2px black;
+}
+
+.card .left {
+    font-size: 24px;
+    
+}
+
+.card .right {
+    text-align: right;
+}
+
+.card .right p {
+    display: inline-flex;
+    margin-right: 10px;
+}
+
+.card .name {
+    font-size: 15px;
+    color: green;
+    font-weight: bolder;
+}

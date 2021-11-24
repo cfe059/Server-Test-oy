@@ -17,7 +17,7 @@ return function (App $app) {
     // 投稿一覧の取得API
     $app->get('/api/page', function (Request $request, Response $response) {
         // データベース操作
-        $link = mysqli_connect('localhost', 'root', '', 'bulletin-board');
+        $link = mysqli_connect('localhost', 'root', '', 'bulletin-board-master');
         $result = mysqli_query($link, 'SELECT * FROM messages');
         $messages = mysqli_fetch_all($result);
         mysqli_close($link);
@@ -29,12 +29,13 @@ return function (App $app) {
 
     // 新規投稿API
     $app->post('/api/page', function (Request $request, Response $response) {
-        $params = $request->getQueryParams();
+        $params = $request->getParsedBody();
+
         $title = $params['title'];
         $message = $params['message'];
 
         // データベース操作
-        $link = mysqli_connect('localhost', 'root', '', 'bulletin-board');
+        $link = mysqli_connect('localhost', 'root', '', 'bulletin-board-master');
         $stmt = mysqli_prepare($link, "INSERT INTO messages (title, message) VALUES (?, ?)");
         mysqli_stmt_bind_param($stmt, "ss", $title, $message);
         $result = mysqli_stmt_execute($stmt);
@@ -47,13 +48,13 @@ return function (App $app) {
 
     // 更新API
     $app->put('/api/page', function (Request $request, Response $response) {
-        $params = $request->getQueryParams();
+        $params = $request->getParsedBody();
         $id = $params['id'];
         $title = $params['title'];
         $message = $params['message'];
 
         // データベース操作
-        $link = mysqli_connect('localhost', 'root', '', 'bulletin-board');
+        $link = mysqli_connect('localhost', 'root', '', 'bulletin-board-master');
         $stmt = mysqli_prepare($link, "UPDATE messages SET title = ?, message = ? WHERE id = ?");
         mysqli_stmt_bind_param($stmt, "ssi", $title, $message, $id);
         $result = mysqli_stmt_execute($stmt);
@@ -65,14 +66,39 @@ return function (App $app) {
     });
 
     // 削除API
-    $app->delete('/api/page', function (Request $request, Response $response) {
-        $params = $request->getQueryParams();
+    $app->post('/api/page/delete', function (Request $request, Response $response) {
+        $params = $request->getParsedBody();
         $id = $params['id'];
 
         // データベース操作
-        $link = mysqli_connect('localhost', 'root', '', 'bulletin-board');
+        $link = mysqli_connect('localhost', 'root', '', 'bulletin-board-master');
         $stmt = mysqli_prepare($link, "DELETE FROM messages WHERE id = ?");
         mysqli_stmt_bind_param($stmt, "i", $id);
+        $result = mysqli_stmt_execute($stmt);
+        
+        mysqli_close($link);
+
+        $response->getBody()->write(json_encode($result, JSON_UNESCAPED_UNICODE));
+        return $response;
+    });
+
+    //編集API
+    $app->post('/api/page/replace', function (Request $request, Response $response) {
+        $params = $request->getParsedBody();
+        $id = $params['id'];
+        $title = $params['title'];
+        $message = $params['message'];
+
+        // データベース操作
+        $link = mysqli_connect('localhost', 'root', '', 'bulletin-board-master');
+        $stmt = mysqli_prepare($link, "DELETE FROM messages WHERE id = ?");
+        mysqli_stmt_bind_param($stmt, "i", $id);
+        $result = mysqli_stmt_execute($stmt);
+
+        // データベース操作
+        $link = mysqli_connect('localhost', 'root', '', 'bulletin-board-master');
+        $stmt = mysqli_prepare($link, "INSERT INTO messages (title, message) VALUES (?, ?)");
+        mysqli_stmt_bind_param($stmt, "ss", $title, $message);
         $result = mysqli_stmt_execute($stmt);
         
         mysqli_close($link);

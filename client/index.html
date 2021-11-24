@@ -17,10 +17,10 @@
         <main>
             <div class="input-block">
                 <div class="nickname">
-                    ニックネーム：<input type="text">
+                    ニックネーム：<input id="title" type="text">
                 </div>
                 <div class="contents">
-                    本文：<textarea name="contents" cols="30" rows="10"></textarea>
+                    本文：<textarea id="message" name="contents" cols="30" rows="10"></textarea>
                 </div>
 
                 <div class="submit-button">
@@ -32,43 +32,7 @@
 
             <div class="lists-block">
                 <h2>投稿一覧</h2>
-                <ul class="lists">
-                    <li class="card">
-                        <div class="left">
-                            こんにちは！
-                        </div>
-                        <div class="right">
-                            <div class="button-block">
-                                <button class="edit">編集</button>
-                                <button class="delete">削除</button>
-                            </div>
-                            <p class="name">たらこさん</p>
-                        </div>
-                    </li>
-                    <li class="card">
-                        <div class="left">
-                            こんにちは！
-                        </div>
-                        <div class="right">
-                            <div class="button-block">
-                                <button class="edit">編集</button>
-                                <button class="delete">削除</button>
-                            </div>
-                            <p class="name">たらこさん</p>
-                        </div>
-                    </li>
-                    <li class="card">
-                        <div class="left">
-                            こんにちは！
-                        </div>
-                        <div class="right">
-                            <div class="button-block">
-                                <button class="edit">編集</button>
-                                <button class="delete">削除</button>
-                            </div>
-                            <p class="name">たらこさん</p>
-                        </div>
-                    </li>
+                <ul id="lists" class="lists">
                 </ul>
             </div>
         </main>
